@@ -29,7 +29,7 @@ async def main():
     return {"Test": "Test"}
 
 @app.get('/database')
-async def database(db: Session = Depends(get_db())):
+async def database(db: Session = Depends(get_db)):
     return {"S": "Yay"}
 
 
