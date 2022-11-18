@@ -37,5 +37,5 @@ class Attendings(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     date = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-    emplyee_id = Column(Integer, ForeignKey('employees.id'), nullable=False)
+    employee_id = Column(Integer, ForeignKey('employees.id'), nullable=False)
 
