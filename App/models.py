@@ -32,10 +32,9 @@ class Employees(Base):
     name = Column(String, unique=True, index=True)
     rule = Column(String)
 
-class Attendings(Base):
-    __tablename__ = "attendings"
+class Attendance(Base):
+    __tablename__ = "attentance"
 
     id = Column(Integer, primary_key=True, index=True)
-    date = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
-    employee_id = Column(Integer, ForeignKey('employees.id'), nullable=False)
-
+    time = Column(TIMESTAMP(timezone=True), )
+    employee_id = Column(Integer, ForeignKey("employees.id"))

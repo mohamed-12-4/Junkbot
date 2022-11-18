@@ -27,19 +27,27 @@ origins = ["*"]
 async def database(db: Session = Depends(get_db)):
     return {"S": "success"}
 
-@app.get('/attendings')
-async def attendings(db: Session = Depends(get_db)):
-    results = await db.query(models.Attendings).all()
-    return {"Data": results}
 
+@app.get('/attendance')
+async def attendings(db: Session = Depends(get_db)):
+    results = await db.query(models.Attendance).all()
+    return {"Data": results}
 
 @app.post('/addemplyoee', status_code=status.HTTP_201_CREATED)
 async def addemplyoee(employee: EmployeeCreate, db: Session = Depends(get_db)):
-    new_employee = await models.Employees(**employee.dict())
+    new_employee = models.Employees(**employee.dict())
     db.add(new_employee)
     db.commit()
     db.refresh(new_employee)
     return {"Data": new_employee}
+
+@app.post('/addattendance', status_code=status.HTTP_201_CREATED)
+async def add_attendance(info: AttendanceCreate, db: Session = Depends(get_db)):
+    new_attendance = models.Attendance(**info.dict())
+    db.add(info)
+    db.commit()
+    db.refresh(info)
+    return {"Data": info}
 
 
 app.add_middleware(

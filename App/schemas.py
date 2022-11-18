@@ -4,6 +4,9 @@ class EmployeeCreate(BaseModel):
     name: str
     rule: str
 
-class AttendingCreate(BaseModel):
+class AttendanceCreate(BaseModel):
     employee_id: int
-    date: datetime
+    time: datetime
+
+    class Config:
+        orm_mode = True
