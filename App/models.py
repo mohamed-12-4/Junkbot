@@ -36,5 +36,6 @@ class Attendance(Base):
     __tablename__ = "attentance"
 
     id = Column(Integer, primary_key=True, index=True)
-    time = Column(TIMESTAMP(timezone=True), )
+    time = Column(TIMESTAMP(timezone=True))
+
     employee_id = Column(Integer, ForeignKey("employees.id"))

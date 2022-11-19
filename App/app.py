@@ -30,7 +30,13 @@ async def database(db: Session = Depends(get_db)):
 
 @app.get('/attendance')
 async def attendings(db: Session = Depends(get_db)):
-    results = await db.query(models.Attendance).all()
+    results = db.query(models.Attendance).all()
+    return {"Data": results}
+
+
+@app.get('/employees')
+async def employees(db: Session = Depends(get_db)):
+    results = db.query(models.Employees).all()
     return {"Data": results}
 
 @app.post('/addemplyoee', status_code=status.HTTP_201_CREATED)
@@ -41,12 +47,12 @@ async def addemplyoee(employee: EmployeeCreate, db: Session = Depends(get_db)):
     db.refresh(new_employee)
     return {"Data": new_employee}
 
-@app.post('/addattendance', status_code=status.HTTP_201_CREATED)
-async def add_attendance(info: AttendanceCreate, db: Session = Depends(get_db)):
-    new_attendance = models.Attendance(**info.dict())
-    db.add(info)
+@app.post('/addattendance/{id}', status_code=status.HTTP_201_CREATED)
+async def add_attendance(id: int, info: AttendanceCreate, db: Session = Depends(get_db)):
+    new_attendance = models.Attendance(**info.dict(), employee_id=id)
+    db.add(new_attendance)
     db.commit()
-    db.refresh(info)
+    db.refresh(new_attendance)
     return {"Data": info}
 
 
